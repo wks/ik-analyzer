@@ -9,19 +9,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
-			<artifactId>lucene-analyzers</artifactId>
-			<version>3.0.3</version>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-core</artifactId>
-			<version>3.0.3</version>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.lucene</groupId>
-			<artifactId>lucene-smartcn</artifactId>
 			<version>3.0.3</version>
 			<optional>true</optional>
 		</dependency>
@@ -35,6 +23,18 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>3.8.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-analyzers</artifactId>
+			<version>3.0.3</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-smartcn</artifactId>
+			<version>3.0.3</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>
