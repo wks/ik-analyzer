@@ -50,9 +50,6 @@ import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.Version;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
-
-
-
 /**
  * 使用IKAnalyzer进行Lucene索引和查询的演示
  * 2012-3-2
@@ -61,8 +58,7 @@ import org.wltea.analyzer.lucene.IKAnalyzer;
  *
  */
 public class LuceneIndexAndSearchDemo {
-	
-	
+
 	/**
 	 * 模拟：
 	 * 创建一个单条记录的索引，并对其进行搜索
