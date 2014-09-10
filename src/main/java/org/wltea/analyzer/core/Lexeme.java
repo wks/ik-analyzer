@@ -1,30 +1,54 @@
 /**
+ * IK 中文分词  版本 5.0
+ * IK Analyzer release 5.0
+ * 
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * 源代码由林良益(linliangyi2005@gmail.com)提供
+ * 版权声明 2012，乌龙茶工作室
+ * provided by Linliangyi and copyright 2012 by Oolong studio
  * 
  */
-package org.wltea.analyzer;
+package org.wltea.analyzer.core;
 
 /**
- * IK Analyzer v3.2
- * 语义单元（词元） * 
- * @author 林良益
- *
+ * IK词元对象 
  */
-public final class Lexeme implements Comparable<Lexeme>{
+public class Lexeme implements Comparable<Lexeme>{
 	//lexemeType常量
-	//普通词元
-	public static final int TYPE_CJK_NORMAL = 0;
-	//姓氏
-	public static final int TYPE_CJK_SN = 1;
-	//尾缀
-	public static final int TYPE_CJK_SF = 2;
-	//未知的
-	public static final int TYPE_CJK_UNKNOWN = 3;
-	//数词
-	public static final int TYPE_NUM = 10;
-	//量词
-	public static final int TYPE_NUMCOUNT = 11;
+	//未知
+	public static final int TYPE_UNKNOWN = 0;
 	//英文
-	public static final int TYPE_LETTER = 20;
+	public static final int TYPE_ENGLISH = 1;
+	//数字
+	public static final int TYPE_ARABIC = 2;
+	//英文数字混合
+	public static final int TYPE_LETTER = 3;
+	//中文词元
+	public static final int TYPE_CNWORD = 4;
+	//中文单字
+	public static final int TYPE_CNCHAR = 64;
+	//日韩文字
+	public static final int TYPE_OTHER_CJK = 8;
+	//中文数词
+	public static final int TYPE_CNUM = 16;
+	//中文量词
+	public static final int TYPE_COUNT = 32;
+	//中文数量词
+	public static final int TYPE_CQUAN = 48;
 	
 	//词元的起始位移
 	private int offset;
@@ -37,10 +61,6 @@ public final class Lexeme implements Comparable<Lexeme>{
     //词元类型
     private int lexemeType;
     
-    //当前词元的前一个词元
-    private Lexeme prev;
-    //当前词元的后一个词元
-    private Lexeme next;
     
 	public Lexeme(int offset , int begin , int length , int lexemeType){
 		this.offset = offset;
@@ -113,28 +133,6 @@ public final class Lexeme implements Comparable<Lexeme>{
         }
 	}
 	
-	/**
-	 * 判断词元是否彼此包含
-	 * @param other
-	 * @return boolean true 完全包含 ， false 可能不相交 或者 相交但不包含
-	 */
-	public boolean isOverlap(Lexeme other){
-		if(other != null){
-			if(this.getBeginPosition() <= other.getBeginPosition() 
-					&& this.getEndPosition() >= other.getEndPosition()){
-				return true;
-				
-			}else if(this.getBeginPosition() >= other.getBeginPosition() 
-					&& this.getEndPosition() <= other.getEndPosition()){
-				return true;
-				
-			}else {
-				return false;
-			}
-		}
-		return false;
-	}
-
 	public int getOffset() {
 		return offset;
 	}
@@ -209,57 +207,78 @@ public final class Lexeme implements Comparable<Lexeme>{
 	public int getLexemeType() {
 		return lexemeType;
 	}
+	
+	/**
+	 * 获取词元类型标示字符串
+	 * @return String
+	 */
+	public String getLexemeTypeString(){
+		switch(lexemeType) {
+
+		case TYPE_ENGLISH :
+			return "ENGLISH";
+			
+		case TYPE_ARABIC :
+			return "ARABIC";
+			
+		case TYPE_LETTER :
+			return "LETTER";
+			
+		case TYPE_CNWORD : 
+			return "CN_WORD";
+			
+		case TYPE_CNCHAR : 
+			return "CN_CHAR";
+			
+		case TYPE_OTHER_CJK :
+			return "OTHER_CJK";
+			
+		case TYPE_COUNT :
+			return "COUNT";
+			
+		case TYPE_CNUM :
+			return "TYPE_CNUM";
+			
+		case TYPE_CQUAN:	
+			return "TYPE_CQUAN";
+			
+		default :
+			return "UNKONW";
+		}
+	}
+		
 
 	public void setLexemeType(int lexemeType) {
 		this.lexemeType = lexemeType;
-	}	
+	}
 	
+	/**
+	 * 合并两个相邻的词元
+	 * @param l
+	 * @param lexemeType
+	 * @return boolean 词元是否成功合并
+	 */
+	public boolean append(Lexeme l , int lexemeType){
+		if(l != null && this.getEndPosition() == l.getBeginPosition()){
+			this.length += l.getLength();
+			this.lexemeType = lexemeType;
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+
+	/**
+	 * 
+	 */
 	public String toString(){
 		StringBuffer strbuf = new StringBuffer();
 		strbuf.append(this.getBeginPosition()).append("-").append(this.getEndPosition());
 		strbuf.append(" : ").append(this.lexemeText).append(" : \t");
-		switch(lexemeType) {
-			case TYPE_CJK_NORMAL : 
-				strbuf.append("CJK_NORMAL");
-				break;
-			case TYPE_CJK_SF :
-				strbuf.append("CJK_SUFFIX");
-				break;
-			case TYPE_CJK_SN :
-				strbuf.append("CJK_NAME");
-				break;
-			case TYPE_CJK_UNKNOWN :
-				strbuf.append("UNKNOWN");
-				break;
-			case TYPE_NUM : 
-				strbuf.append("NUMEBER");
-				break;
-			case TYPE_NUMCOUNT :
-				strbuf.append("COUNT");
-				break;
-			case TYPE_LETTER :
-				strbuf.append("LETTER");
-				break;
-
-		}
+		strbuf.append(this.getLexemeTypeString());
 		return strbuf.toString();
 	}
-
-	Lexeme getPrev() {
-		return prev;
-	}
-
-	void setPrev(Lexeme prev) {
-		this.prev = prev;
-	}
-
-	Lexeme getNext() {
-		return next;
-	}
-
-	void setNext(Lexeme next) {
-		this.next = next;
-	}
-
 	
+
 }
