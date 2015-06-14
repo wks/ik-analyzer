@@ -3,39 +3,48 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.wltea.ik-analyzer</groupId>
 	<artifactId>ik-analyzer</artifactId>
-	<version>3.2.8</version>
-	<name>IK Analyzer 3</name>
+	<version>5.1.0</version>
+	<name>IK Analyzer</name>
 	<description>A dictionary and grammar-based Chinese segmenter.</description>
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-core</artifactId>
-			<version>3.0.3</version>
+			<version>5.1.0</version>
 			<optional>true</optional>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.apache.solr</groupId>
 			<artifactId>solr-core</artifactId>
-			<version>1.4.1</version>
+			<version>5.1.0</version>
 			<optional>true</optional>
 		</dependency>
+		
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>3.8.2</version>
+			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- 
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-analyzers</artifactId>
 			<version>3.0.3</version>
 			<scope>test</scope>
 		</dependency>
+		 -->
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
-			<artifactId>lucene-smartcn</artifactId>
-			<version>3.0.3</version>
-			<scope>test</scope>
+			<artifactId>lucene-analyzers-smartcn</artifactId>
+			<version>5.1.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-queryparser</artifactId>
+			<version>5.1.0</version>
+		</dependency>
+		
 	</dependencies>
 </project>

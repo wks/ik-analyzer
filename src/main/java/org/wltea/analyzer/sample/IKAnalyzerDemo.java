@@ -8,8 +8,11 @@ import java.io.IOException;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.CorruptIndexException;
+import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
@@ -42,16 +45,18 @@ public class IKAnalyzerDemo {
 		IndexSearcher isearcher = null;
 		try {
 			//建立内存索引对象
-			directory = new RAMDirectory();	 
-			iwriter = new IndexWriter(directory, analyzer, true , IndexWriter.MaxFieldLength.LIMITED);
+			directory = new RAMDirectory();	
+			IndexWriterConfig conf = new IndexWriterConfig(analyzer);
+			iwriter = new IndexWriter(directory, conf);
 			Document doc = new Document();
-			doc.add(new Field("ID", "10000", Field.Store.YES, Field.Index.NOT_ANALYZED));
-			doc.add(new Field(fieldName, text, Field.Store.YES, Field.Index.ANALYZED));
+			doc.add(new Field("ID", "10000", TextField.TYPE_STORED));
+			doc.add(new Field(fieldName, text, TextField.TYPE_STORED));
 			iwriter.addDocument(doc);
 			iwriter.close();
 			
-		    //实例化搜索器   
-			isearcher = new IndexSearcher(directory);			
+		    //实例化搜索器
+			 DirectoryReader ireader = DirectoryReader.open(directory);
+			isearcher = new IndexSearcher(ireader);			
 			//在索引器中使用IKSimilarity相似度评估器
 			isearcher.setSimilarity(new IKSimilarity());
 			
@@ -77,13 +82,6 @@ public class IKAnalyzerDemo {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally{
-			if(isearcher != null){
-				try {
-					isearcher.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
 			if(directory != null){
 				try {
 					directory.close();

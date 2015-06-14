@@ -3,11 +3,11 @@
  */
 package org.wltea.analyzer.solr;
 
-import java.io.Reader;
 import java.util.Map;
 
 import org.apache.lucene.analysis.Tokenizer;
-import org.apache.solr.analysis.BaseTokenizerFactory;
+import org.apache.lucene.analysis.util.TokenizerFactory;
+import org.apache.lucene.util.AttributeFactory;
 import org.wltea.analyzer.lucene.IKTokenizer;
 
 /**
@@ -17,16 +17,18 @@ import org.wltea.analyzer.lucene.IKTokenizer;
  * @author 林良益、李良杰
  *
  */
-public final class IKTokenizerFactory extends BaseTokenizerFactory{
+public final class IKTokenizerFactory extends TokenizerFactory {
 	
+	protected IKTokenizerFactory(Map<String, String> args) {
+		super(args);
+	}
+
 	private boolean isMaxWordLength = false;
 	
 	/**
 	 * IK分词器Solr TokenizerFactory接口实现类
 	 * 默认最细粒度切分算法
 	 */
-	public IKTokenizerFactory(){
-	}
 	
 	/*
 	 * (non-Javadoc)
@@ -37,20 +39,17 @@ public final class IKTokenizerFactory extends BaseTokenizerFactory{
 		isMaxWordLength = Boolean.parseBoolean(_arg);
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * @see org.apache.solr.analysis.TokenizerFactory#create(java.io.Reader)
-	 */
-	public Tokenizer create(Reader reader) {
-		return new IKTokenizer(reader , isMaxWordLength());
-	}
-
 	public void setMaxWordLength(boolean isMaxWordLength) {
 		this.isMaxWordLength = isMaxWordLength;
 	}
 
 	public boolean isMaxWordLength() {
 		return isMaxWordLength;
+	}
+
+	@Override
+	public Tokenizer create(AttributeFactory factory) {
+		return new IKTokenizer(factory);
 	}
 
 }

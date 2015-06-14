@@ -18,7 +18,7 @@ import org.wltea.analyzer.seg.ISegmenter;
  * @author 林良益
  *
  */
-public final class IKSegmentation{
+public final class IKSegmentation {
 
 	
 	private Reader input;	
@@ -53,6 +53,12 @@ public final class IKSegmentation{
 		context = new Context(segmentBuff , isMaxWordLength);
 		segmenters = Configuration.loadSegmenter();
 	}
+	
+//	public IKSegmentation(boolean isMaxWordLength){
+//		segmentBuff = new char[BUFF_SIZE];
+//		context = new Context(segmentBuff , isMaxWordLength);
+//		segmenters = Configuration.loadSegmenter();
+//	}
 	
 	/**
 	 * 获取下一个语义单元

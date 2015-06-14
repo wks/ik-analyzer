@@ -6,33 +6,33 @@ package org.wltea.analyzer.test;
 import java.io.IOException;
 import java.io.StringReader;
 
-import org.apache.lucene.analysis.tokenattributes.TermAttribute;
+import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
+import org.junit.Test;
 import org.wltea.analyzer.lucene.IKTokenizer;
-
-import junit.framework.TestCase;
 
 /**
  * @author 林良益
  *
  */
-public class IKTokenerTest extends TestCase {
-	
-	public void testLucene3Tokenizer(){
+public class IKTokenerTest {
+
+	@Test
+	public void testLucene5Tokenizer() throws IOException {
 		String t = "IK分词器Lucene Analyzer接口实现类 民生银行";
-		IKTokenizer tokenizer = new IKTokenizer(new StringReader(t) , false);
+		IKTokenizer tokenizer = new IKTokenizer(false);
+		tokenizer.setReader(new StringReader(t));
+		tokenizer.reset();
 		try {
-			while(tokenizer.incrementToken()){
-				TermAttribute termAtt = tokenizer.getAttribute(TermAttribute.class);
-				System.out.println(termAtt);				
+			while (tokenizer.incrementToken()) {
+				CharTermAttribute termAtt = tokenizer
+						.getAttribute(CharTermAttribute.class);
+				System.out.println(termAtt);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 	}
-	
-	
 
 }
