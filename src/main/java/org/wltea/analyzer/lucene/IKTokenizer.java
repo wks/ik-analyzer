@@ -33,27 +33,22 @@ public final class IKTokenizer extends Tokenizer {
 	//记录最后一个词元的结束位置
 	private int finalOffset;
 
-	 public IKTokenizer() {
-	 }
+	 public IKTokenizer() {}
 
 	  public IKTokenizer(AttributeFactory factory) {
 	    super(factory);
 	  }
 	/**
 	 * Lucene Tokenizer适配器类构造函数
-	 * @param in
+	 * @param in 输入流
 	 * @param isMaxWordLength 当为true时，分词器进行最大词长切分；当为false是，采用最细粒度切分
 	 */
-//	public IKTokenizer(Reader in , boolean isMaxWordLength) {
-//	    try {
-//			super.setReader(in);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	    offsetAtt = addAttribute(OffsetAttribute.class);
-//	    termAtt = addAttribute(CharTermAttribute.class);
-//		_IKImplement = new IKSegmentation(in , isMaxWordLength);
-//	}	
+	public IKTokenizer(Reader in , boolean isMaxWordLength) {
+        super.setReader(in);
+        offsetAtt = addAttribute(OffsetAttribute.class);
+	    termAtt = addAttribute(CharTermAttribute.class);
+		_IKImplement = new IKSegmentation(in , isMaxWordLength);
+	}
 	
 	public IKTokenizer(boolean isMaxWordLength) {
 		offsetAtt = addAttribute(OffsetAttribute.class);
@@ -85,15 +80,17 @@ public final class IKTokenizer extends Tokenizer {
 		return false;
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * @see org.apache.lucene.analysis.Tokenizer#reset(java.io.Reader)
-	 */
-	public void reset(Reader input) throws IOException {
-		super.reset();
-		_IKImplement.reset(input);
-	}
-	
+//	/**
+//	 * (non-Javadoc)
+//	 * @see org.apache.lucene.analysis.Tokenizer#reset(java.io.Reader)
+//	 */
+//	@Override
+//	public void reset(Reader input) throws IOException {
+//		super.reset();
+//		_IKImplement.reset(input);
+//	}
+
+	@Override
 	public void reset() throws IOException {
 		super.reset();
 		_IKImplement.reset(input);

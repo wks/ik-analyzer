@@ -6,18 +6,21 @@
 	<version>5.1.0</version>
 	<name>IK Analyzer</name>
 	<description>A dictionary and grammar-based Chinese segmenter.</description>
+	<properties>
+        <lucene.version>6.5.1</lucene.version>
+    </properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-core</artifactId>
-			<version>5.1.0</version>
+			<version>${lucene.version}</version>
 			<optional>true</optional>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.apache.solr</groupId>
 			<artifactId>solr-core</artifactId>
-			<version>5.1.0</version>
+			<version>${lucene.version}</version>
 			<optional>true</optional>
 		</dependency>
 		
@@ -38,12 +41,12 @@
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-analyzers-smartcn</artifactId>
-			<version>5.1.0</version>
+			<version>${lucene.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-queryparser</artifactId>
-			<version>5.1.0</version>
+			<version>${lucene.version}</version>
 		</dependency>
 		
 	</dependencies>

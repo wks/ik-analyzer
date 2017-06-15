@@ -19,6 +19,7 @@ public class IKTokenerTest {
 	@Test
 	public void testLucene5Tokenizer() throws IOException {
 		String t = "IK分词器Lucene Analyzer接口实现类 民生银行";
+		t = "团购网站的本质是什么？";
 		IKTokenizer tokenizer = new IKTokenizer(false);
 		tokenizer.setReader(new StringReader(t));
 		tokenizer.reset();

@@ -40,7 +40,7 @@ public class Context{
     Context(char[] segmentBuff , boolean isMaxWordLength){
     	this.isMaxWordLength = isMaxWordLength;
     	this.segmentBuff = segmentBuff;
-    	this.buffLocker = new HashSet<ISegmenter>(4);
+    	this.buffLocker = new HashSet<>(4);
     	this.lexemeSet = new IKSortedLinkSet();
 	}
     
