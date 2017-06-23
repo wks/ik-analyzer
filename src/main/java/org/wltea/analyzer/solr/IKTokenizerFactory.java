@@ -18,7 +18,7 @@ import org.wltea.analyzer.lucene.IKTokenizer;
  */
 public final class IKTokenizerFactory extends TokenizerFactory {
 
-    protected IKTokenizerFactory(Map<String, String> args) {
+    public IKTokenizerFactory(Map<String, String> args) {
         super(args);
     }
 

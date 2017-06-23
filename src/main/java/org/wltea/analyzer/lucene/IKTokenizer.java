@@ -33,10 +33,15 @@ public final class IKTokenizer extends Tokenizer {
 	//记录最后一个词元的结束位置
 	private int finalOffset;
 
-	 public IKTokenizer() {}
+	 public IKTokenizer() {
+		 this(false);
+	 }
 
 	  public IKTokenizer(AttributeFactory factory) {
 	    super(factory);
+          offsetAtt = addAttribute(OffsetAttribute.class);
+          termAtt = addAttribute(CharTermAttribute.class);
+          _IKImplement = new IKSegmentation(input, false);
 	  }
 	/**
 	 * Lucene Tokenizer适配器类构造函数
@@ -53,7 +58,6 @@ public final class IKTokenizer extends Tokenizer {
 	public IKTokenizer(boolean isMaxWordLength) {
 		offsetAtt = addAttribute(OffsetAttribute.class);
 	    termAtt = addAttribute(CharTermAttribute.class);
-	   
 	    _IKImplement = new IKSegmentation(input, isMaxWordLength);
 	}
 	
