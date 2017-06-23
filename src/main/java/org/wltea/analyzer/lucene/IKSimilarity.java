@@ -3,7 +3,7 @@
  */
 package org.wltea.analyzer.lucene;
 
-import org.apache.lucene.search.similarities.DefaultSimilarity;
+import org.apache.lucene.search.similarities.BM25Similarity;
 
 /**
  * IK Analyzer v3.2
@@ -13,7 +13,7 @@ import org.apache.lucene.search.similarities.DefaultSimilarity;
  * @author 林良益
  *
  */
-public class IKSimilarity extends DefaultSimilarity {
+public class IKSimilarity extends BM25Similarity {
 
 	/* (non-Javadoc)
 	 * @see org.apache.lucene.search.Similarity#coord(int, int)

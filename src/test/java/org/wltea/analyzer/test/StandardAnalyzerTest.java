@@ -15,7 +15,7 @@ import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
  * @author linliangyi
  *
  */
-public class StandardAnalyzerTest extends TestCase {
+public class StandardAnalyzerTest {
 
 	public static void main(String[] args) throws IOException {
 		String testString = null;
