@@ -34,12 +34,15 @@ public class Dictionary {
 	 * 词典单子实例
 	 */
 	private static final Dictionary singleton;
-	
+
+	private static class DictionaryHolder {
+		public static Dictionary instance = new Dictionary();
+	}
 	/*
 	 * 词典初始化
 	 */
 	static{
-		singleton = new Dictionary();
+		singleton = DictionaryHolder.instance;
 	}
 	
 	/*
