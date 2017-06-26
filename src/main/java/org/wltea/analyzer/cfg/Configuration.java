@@ -2,7 +2,6 @@ package org.wltea.analyzer.cfg;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wltea.analyzer.dic.Dictionary;
 import org.wltea.analyzer.seg.CJKSegmenter;
 import org.wltea.analyzer.seg.ISegmenter;
 import org.wltea.analyzer.seg.LetterSegmenter;
@@ -43,16 +42,18 @@ public class Configuration {
 	private Configuration(){
 		
 		props = new Properties();
-		
 		InputStream input = Configuration.class.getResourceAsStream(FILE_NAME);
 		if(input != null){
 			try {
 				props.loadFromXML(input);
-				logger.debug("load config as {}", props);
+				logger.debug("load config as {}", props.toString());
 			} catch (IOException e) {
+			    logger.error("load ik config file failed, {}", e);
 				e.printStackTrace();
 			}
-		}
+		} else {
+		    logger.error("ik config file {} read failed", FILE_NAME);
+        }
 	}
 	
 	/**
@@ -102,8 +103,9 @@ public class Configuration {
 	 */
 	public static List<ISegmenter> loadSegmenter(){
 		//初始化词典单例
-		Dictionary.getInstance();
-		List<ISegmenter> segmenters = new ArrayList<>(4);
+//        Dictionary instance = Dictionary.getInstance();
+
+        List<ISegmenter> segmenters = new ArrayList<>(4);
 		//处理数量词的子分词器
 		segmenters.add(new QuantifierSegmenter());
 		//处理中文词的子分词器
