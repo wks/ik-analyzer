@@ -3,7 +3,7 @@
  */
 package org.wltea.analyzer.lucene;
 
-import java.io.Reader;
+import java.io.IOException;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
@@ -37,20 +37,27 @@ public final class IKAnalyzer extends Analyzer {
 		this.setMaxWordLength(isMaxWordLength);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.apache.lucene.analysis.Analyzer#tokenStream(java.lang.String, java.io.Reader)
-	 */
-	@Override
-	public TokenStream tokenStream(String fieldName, Reader reader) {
-		return new IKTokenizer(reader , isMaxWordLength());
-	}
-
 	public void setMaxWordLength(boolean isMaxWordLength) {
 		this.isMaxWordLength = isMaxWordLength;
 	}
 
 	public boolean isMaxWordLength() {
 		return isMaxWordLength;
+	}
+
+	@Override
+	protected TokenStreamComponents createComponents(String fieldName) {
+		final IKTokenizer tokenizer = new IKTokenizer(false);
+		TokenStream result;
+		result = tokenizer;
+		try {
+			result.reset();
+			tokenizer.reset();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new TokenStreamComponents(tokenizer, result);
 	}
 
 }

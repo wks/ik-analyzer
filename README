@@ -1,6 +1,6 @@
 IKAnalyzer是一个开源的，基于java语言开发的轻量级的中文分词工具包。从2006年12月推出1.0版开始，IKAnalyzer已经推出了3个大版本。最初，它是以开源项目Luence为应用主体的，结合词典分词和文法分析算法的中文分词组件。新版本的 IKAnalyzer3.0则发展为面向Java的公用分词组件，独立于Lucene项目，同时提供了对Lucene的默认优化实现。 
 
-IKAnalyzer3.0特性:
+## IKAnalyzer3.0特性:
 
 采用了特有的“正向迭代最细粒度切分算法“，支持细粒度和最大词长两种切分模式；具有83万字/秒（1600KB/S）的高速处理能力。
 
@@ -14,17 +14,33 @@ IKAnalyzer的作者为林良益（linliangyi2007@gmail.com），项目网站为h
 
 Maven工程由王坤山创建（wks1986@gmail.com）。创建的目的是为了方便用于其他Maven工程。你可以在 https://github.com/wks/ik-analyzer 网站找到本工程。
 
-Maven用法：
+## Maven用法：
 
-将以下依赖加入工程的pom.xml中的<dependencies>...</dependencies>部分。
+将以下依赖加入工程的`pom.xml`中的`<dependencies>...</dependencies>`部分。
+```
     <dependency>
         <groupId>org.wltea.ik-analyzer</groupId>
         <artifactId>ik-analyzer</artifactId>
-        <version>3.2.8</version>
+        <version>5.1.0</version>
 	</dependency>
+```
 
 在IK Analyzer加入Maven Central Repository之前，你需要手动安装，安装到本地的repository，或者上传到自己的Maven repository服务器上。
 
 要安装到本地Maven repository，使用如下命令，将自动编译，打包并安装：
-mvn install -Dmaven.test.skip=true
+`mvn install -Dmaven.test.skip=true`
+打包
+`mvn package -Dmaven.test.skip=true`
 
+## solr config
+`schema.xml`
+```xml
+<fieldType name="text_ik" class="solr.TextField">
+  <analyzer type="index">
+    <tokenizer class="org.wltea.analyzer.solr.IKTokenizerFactory" useSmart="false" />
+  </analyzer>
+  <analyzer type="query">
+    <tokenizer class="org.wltea.analyzer.solr.IKTokenizerFactory" useSmart="true" />
+  </analyzer>
+</fieldType>
+```

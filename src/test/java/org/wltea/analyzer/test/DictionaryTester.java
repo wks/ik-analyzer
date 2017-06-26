@@ -18,8 +18,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import junit.framework.TestCase;
-
+import org.junit.Test;
 import org.wltea.analyzer.dic.DictSegment;
 import org.wltea.analyzer.dic.Dictionary;
 import org.wltea.analyzer.dic.Hit;
@@ -29,8 +28,9 @@ import org.wltea.analyzer.dic.Hit;
  * @author 林良益
  * 
  */
-public class DictionaryTester extends TestCase {
+public class DictionaryTester {
 	
+	@Test
 	public void testMainDicEncoding(){
 		int count = 0;
         InputStream is = DictionaryTester.class.getResourceAsStream(Dictionary.PATH_DIC_MAIN);
@@ -63,6 +63,7 @@ public class DictionaryTester extends TestCase {
 		}
 	}
 	
+	@Test
 	public void testMainDictMemoryConsume(){
         InputStream is = DictionaryTester.class.getResourceAsStream(Dictionary.PATH_DIC_MAIN);
         System.out.println(new Date() + " before load dictionary");
@@ -108,6 +109,7 @@ public class DictionaryTester extends TestCase {
 		}		
 	}	
 	
+	@Test
 	public void testCountWordHeader(){
 		FileOutputStream fos = null;
 		Map<String , Integer> wordMap = new HashMap<String ,Integer>();
@@ -173,6 +175,7 @@ public class DictionaryTester extends TestCase {
 		}		
 	}
 	
+	@Test
 	public void testSurNameDicEncoding(){
 		int count = 0;
         InputStream is = DictionaryTester.class.getResourceAsStream(Dictionary.PATH_DIC_SURNAME);
@@ -205,6 +208,7 @@ public class DictionaryTester extends TestCase {
 		}
 	}
 	
+	@Test
 	public void testSuffixDicEncoding(){
 		int count = 0;
         InputStream is = DictionaryTester.class.getResourceAsStream(Dictionary.PATH_DIC_SUFFIX);
@@ -237,6 +241,7 @@ public class DictionaryTester extends TestCase {
 		}
 	}
 	
+	@Test
 	public void testStopDicEncoding(){
 		int count = 0;
         //InputStream is = DictionaryTester.class.getResourceAsStream(Dictionary.PATH_DIC_STOP);
@@ -270,7 +275,7 @@ public class DictionaryTester extends TestCase {
 		}
 	}	
 		
-	
+	@Test
 	public void testDictSegmentSearch(){
         InputStream is = DictionaryTester.class.getResourceAsStream(Dictionary.PATH_DIC_MAIN);
         System.out.println(new Date() + " before load dictionary");
@@ -333,6 +338,7 @@ public class DictionaryTester extends TestCase {
 		System.out.println("Total words : " + allWords.size() + " Match words : " + mCount + " Unmatch words : " + umCount);
 	}
 	
+	@Test
 	public void testDictionarySearch(){
 	     InputStream is = DictionaryTester.class.getResourceAsStream(Dictionary.PATH_DIC_MAIN);
 	     List<String> allWords = new ArrayList<String>();
@@ -390,6 +396,7 @@ public class DictionaryTester extends TestCase {
 	/**
 	 * 量词排序
 	 */
+	@Test
 	public void testSortCount(){
 		InputStream is = DictionaryTester.class.getResourceAsStream(Dictionary.PATH_DIC_QUANTIFIER);
 		TreeSet<String> allWords = new TreeSet<String>();
@@ -485,6 +492,7 @@ public class DictionaryTester extends TestCase {
 //		}
 //	}
 	
+	@Test
 	public void testSortAndClear(){
 		//int count = 0;
         InputStream is = DictionaryTester.class.getResourceAsStream(Dictionary.PATH_DIC_PREP);

@@ -3,7 +3,7 @@
  */
 package org.wltea.analyzer.lucene;
 
-import org.apache.lucene.search.DefaultSimilarity;
+import org.apache.lucene.search.similarities.BM25Similarity;
 
 /**
  * IK Analyzer v3.2
@@ -13,11 +13,7 @@ import org.apache.lucene.search.DefaultSimilarity;
  * @author 林良益
  *
  */
-public class IKSimilarity extends DefaultSimilarity {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7558565500061194774L;
+public class IKSimilarity extends BM25Similarity {
 
 	/* (non-Javadoc)
 	 * @see org.apache.lucene.search.Similarity#coord(int, int)
@@ -26,5 +22,6 @@ public class IKSimilarity extends DefaultSimilarity {
 		float overlap2 = (float)Math.pow(2, overlap);
 		float maxOverlap2 = (float)Math.pow(2, maxOverlap);
 		return (overlap2 / maxOverlap2);
-	}	
+	}
+
 }
