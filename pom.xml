@@ -6,6 +6,12 @@
 	<version>3.2.8</version>
 	<name>IK Analyzer 3</name>
 	<description>A dictionary and grammar-based Chinese segmenter.</description>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
